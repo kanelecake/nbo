@@ -47,7 +47,7 @@ def create_item_quantity_array(data):
 
 def create_nbo_model(num_items):
     item_input = Input(shape=(1,), name='item_input')
-    item_embedding = Embedding(input_dim=num_items, output_dim=32)(item_input)
+    item_embedding = Embedding(input_dim=32, output_dim=32)(item_input)
     item_flatten = Flatten()(item_embedding)
     interaction_input = Input(shape=(num_items,), name='interaction_input')
     concat = Concatenate()([item_flatten, interaction_input])
@@ -64,5 +64,4 @@ item_quantity_array = create_item_quantity_array(data)
 
 model = create_nbo_model(len(item_to_index))
 
-print(item_quantity_array[:, 0], interaction_matrix[:,], item_quantity_array[:, 1])
-model.fit([item_quantity_array[:, 0], interaction_matrix[:,]], item_quantity_array[:, 1], epochs=10, batch_size=32, validation_split=0.2)
+model.fit([interaction_matrix[:, 0], item_quantity_array], interaction_matrix[:, 1], epochs=10, batch_size=32, validation_split=0.2)
